@@ -5,5 +5,5 @@ spring:
     restart:
       enabled: true
 
-logging:
-  level: info
+#logging:
+#  level: info
