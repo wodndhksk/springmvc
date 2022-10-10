@@ -1,7 +1,9 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +36,12 @@ public class RequestParamController {
         return "ok";
     }
 
+    /**
+     * @RequestParam("변수명") 생략 가능(단, 요청파라미터와 파라미터 이름이 같아야함)
+     * @param username
+     * @param age
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/request-param-v3")
     public String requestParamV3(@RequestParam String username,
@@ -43,6 +51,12 @@ public class RequestParamController {
         return "ok";
     }
 
+    /**
+     * @RequestParam 생략가능
+     * @param username
+     * @param age
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/request-param-v4")
     public String requestParamV4(String username, int age){
@@ -51,7 +65,12 @@ public class RequestParamController {
         return "ok";
     }
 
-
+    /**
+     * 파라미터 required 가 true(default) or false
+     * @param username
+     * @param age
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/request-param-required")
     public String requestParamRequired(@RequestParam(required = true) String username,
@@ -61,6 +80,12 @@ public class RequestParamController {
         return "ok";
     }
 
+    /**
+     * DefaultValue 로 'null' 일때 default 값 설정
+     * @param username
+     * @param age
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/request-param-default")
     public String requestParamDefault(@RequestParam(required = true, defaultValue = "guest") String username, // defulatValue 가 있으면 사실상 required 가 필요 없다
@@ -70,11 +95,44 @@ public class RequestParamController {
         return "ok";
     }
 
+    /**
+     * Map으로 받기
+     * @param paramMap
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/request-param-map")
     public String requestParamDefault(@RequestParam Map<String, Object> paramMap){
 
         log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
+        return "ok";
+    }
+
+    /**
+     * @ModelAttribute 사용
+     * @param helloData
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData helloData){
+
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData={}", helloData);
+        return "ok";
+    }
+
+    /**
+     * 략
+     * @param helloData
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData helloData){
+
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData={}", helloData);
         return "ok";
     }
 
